@@ -41,7 +41,8 @@ export default function Component() {
     setIsRandomizing(true);
     setPrompt('Randomizing...');
     try {
-      const response = await fetch('/api/openai/random-prompt');
+      // Use Date.now() to prevent caching by adding a unique timestamp to the request
+      const response = await fetch(`/api/openai/random-prompt?${Date.now()}`);
       const data = await response.json();
 
       if (data.prompt) {
