@@ -13,7 +13,7 @@ export async function GET() {
 
     // Use GPT-4 to generate the random prompt for LuhTyler
     const response = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'gpt-4o',
       messages: [
         {
           role: 'user',
