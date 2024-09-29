@@ -36,7 +36,6 @@ export default function Component() {
     }
   }, [prompt])
 
-  // Fetch the generated prompt from the OpenAI API
   const handleRandomize = async () => {
     setIsRandomizing(true)  // Set loading state to true
     setPrompt('Randomizing...')  // Show "randomizing..." in the textarea
@@ -96,8 +95,7 @@ export default function Component() {
             key={index}
             src={image}
             alt={`Background slideshow ${index + 1}`}
-            layout="fill"
-            objectFit="cover"
+            fill  // Replaces layout="fill"
             className={`absolute inset-0 transition-opacity duration-2000 ${index === currentBackgroundIndex ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
@@ -124,8 +122,7 @@ export default function Component() {
                     <Image 
                       src={generatedImage}
                       alt="Generated Art" 
-                      layout="fill"
-                      objectFit="cover"
+                      fill  // Replaces layout="fill"
                       className="cursor-pointer"
                       onClick={() => setIsLightboxOpen(true)}  // Open lightbox on click
                     />
@@ -201,8 +198,7 @@ export default function Component() {
               <Image 
                 src={generatedImage}
                 alt="Generated Art" 
-                layout="fill"
-                objectFit="contain"
+                fill  // Replaces layout="fill"
                 className="rounded-lg"
               />
               <button
