@@ -41,7 +41,7 @@ export default function Component() {
     setIsRandomizing(true);
     setPrompt('Randomizing...');
     try {
-      const response = await fetch('/api/openai/random-prompt');
+      const response = await fetch('/api/openai/random-prompt', { cache: 'no-store' });
       const data = await response.json();
 
       if (data.prompt) {
@@ -126,6 +126,8 @@ export default function Component() {
             <div className="relative w-full">
               <textarea
                 ref={textareaRef}
+                id="prompt-textarea"    // Added id
+                name="prompt"           // Added name
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Bring Luh Tyler to life in any scene you dream up! Type your idea here to begin..."
