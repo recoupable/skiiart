@@ -188,7 +188,7 @@ export default function Component() {
             <div className="flex items-center text-white text-xs">
               <Lightbulb className="mr-2 flex-shrink-0" size={16} />
               <p>
-              Include trigger word <strong>&apos;LuhTyler&apos;</strong> in your prompt for best results.
+                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt for best results.
               </p>
             </div>
           </div>
