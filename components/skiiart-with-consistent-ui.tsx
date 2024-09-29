@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { Wand2, Lightbulb, Shuffle, X, Download } from 'lucide-react'
+import Image from 'next/image'
 
 const backgroundImages = [
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/replicate-prediction-fy15mx7sk5rj40cj6rwr93rmnw-1-4HBrNDjxialgYM8Yr4pKvPyYbw3YQG.png",
@@ -91,19 +92,23 @@ export default function Component() {
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans">
       <div className="relative h-screen">
         {backgroundImages.map((image, index) => (
-          <img 
+          <Image 
             key={index}
             src={image}
             alt={`Background slideshow ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-2000 ${index === currentBackgroundIndex ? 'opacity-100' : 'opacity-0'}`}
+            layout="fill"
+            objectFit="cover"
+            className={`absolute inset-0 transition-opacity duration-2000 ${index === currentBackgroundIndex ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
         <div className="relative z-10 h-full bg-black bg-opacity-30 text-white flex flex-col justify-between p-6">
           <header className="container mx-auto text-center pt-4">
-            <img 
+            <Image 
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/SkiiArt-9-27-2024-3K8GqXJES1Cr9ckA4rXR0oUBKV8Cuy.png" 
               alt="SkiiArt Logo" 
-              className="mx-auto w-64 sm:w-72 h-auto"
+              width={288}
+              height={72}
+              className="mx-auto"
             />
           </header>
 
@@ -116,10 +121,12 @@ export default function Component() {
                   </div>
                 ) : generatedImage ? (
                   <>
-                    <img 
+                    <Image 
                       src={generatedImage}
                       alt="Generated Art" 
-                      className="w-full h-full object-cover cursor-pointer"
+                      layout="fill"
+                      objectFit="cover"
+                      className="cursor-pointer"
                       onClick={() => setIsLightboxOpen(true)}  // Open lightbox on click
                     />
                     <button
@@ -191,10 +198,12 @@ export default function Component() {
         {isLightboxOpen && generatedImage && (
           <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
             <div className="relative max-w-3xl w-full p-4">
-              <img 
+              <Image 
                 src={generatedImage}
                 alt="Generated Art" 
-                className="w-full h-auto max-h-[90vh] object-cover rounded-lg"
+                layout="fill"
+                objectFit="contain"
+                className="rounded-lg"
               />
               <button
                 onClick={() => setIsLightboxOpen(false)}
