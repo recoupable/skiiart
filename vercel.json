@@ -1,11 +1,8 @@
 {
     "functions": {
       "api/*": {
-        "memory": 1024,
-        "maxDuration": 10,
-        "headers": {
-          "Cache-Control": "no-store"
-        }
+        "memory": 128,
+        "maxDuration": 5
       }
     }
   }
