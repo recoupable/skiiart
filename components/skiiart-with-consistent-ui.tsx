@@ -41,11 +41,11 @@ export default function Component() {
     setIsRandomizing(true);
     setPrompt('Randomizing...');
     try {
-      const response = await fetch('/api/openai/random-prompt', { cache: 'no-store' });
+      const response = await fetch('/api/openai/random-prompt');
       const data = await response.json();
 
       if (data.prompt) {
-        setPrompt(data.prompt); // Show only the random part in the textarea
+        setPrompt(data.prompt); // Set only the new random prompt
       } else {
         console.error('Failed to generate prompt:', data.error);
         setPrompt('Failed to generate prompt');
@@ -126,8 +126,6 @@ export default function Component() {
             <div className="relative w-full">
               <textarea
                 ref={textareaRef}
-                id="prompt-textarea"    // Added id
-                name="prompt"           // Added name
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Bring Luh Tyler to life in any scene you dream up! Type your idea here to begin..."
