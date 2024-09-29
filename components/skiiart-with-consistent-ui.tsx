@@ -1,91 +1,103 @@
 'use client'
 
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { Wand2, Lightbulb, Shuffle, X, Download } from 'lucide-react'
-import Image from 'next/image'
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Wand2, Lightbulb, Shuffle, X, Download, Share } from 'lucide-react';
+import Image from 'next/image';
 
 const backgroundImages = [
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/replicate-prediction-fy15mx7sk5rj40cj6rwr93rmnw-1-4HBrNDjxialgYM8Yr4pKvPyYbw3YQG.png",
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/replicate-prediction-2fqwd83d35rj20cj6s0aev513w-2-fMxpya9VY6uhiHlglpDUlRKZd4U6Ay.png",
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/replicate-prediction-mykwbygsj9rj20cj6rzavtc5hc-0-IDf6C7EsFOaX86ev4nav5FYaH7gCRC.png"
-]
+];
 
 export default function Component() {
-  const [prompt, setPrompt] = useState('')
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isRandomizing, setIsRandomizing] = useState(false)  // Loading state for randomizing
-  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0)
-  const [showImageBox, setShowImageBox] = useState(false)
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false)  // For full-screen lightbox
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const [prompt, setPrompt] = useState('');
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRandomizing, setIsRandomizing] = useState(false);
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+  const [showLightbox, setShowLightbox] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const hiddenPromptPart = "LuhTyler must be the central focus of the image, exuding confidence, style, and power. The image should be cinematic, with dramatic lighting, vibrant colors, and a high level of detail. Make sure the image is polished, photo-realistic, and visually striking. The background should complement the scene but not overpower LuhTyler, enhancing his presence as the main character. Prioritize clean, well-composed scenes to ensure LuhTyler stands out as the hero of the image.";
 
   const changeBackgroundImage = useCallback(() => {
-    setCurrentBackgroundIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length)
-  }, [])
+    setCurrentBackgroundIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+  }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(changeBackgroundImage, 10000) // Change image every 10 seconds
-    return () => clearInterval(intervalId)
-  }, [changeBackgroundImage])
+    const intervalId = setInterval(changeBackgroundImage, 10000);
+    return () => clearInterval(intervalId);
+  }, [changeBackgroundImage]);
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [prompt])
+  }, [prompt]);
 
   const handleRandomize = async () => {
-    setIsRandomizing(true)  // Set loading state to true
-    setPrompt('Randomizing...')  // Show "randomizing..." in the textarea
+    setIsRandomizing(true);
+    setPrompt('Randomizing...');
     try {
-      const response = await fetch('/api/openai/random-prompt')  // Call the random prompt API
-      const data = await response.json()
+      const response = await fetch('/api/openai/random-prompt');
+      const data = await response.json();
 
       if (data.prompt) {
-        setPrompt(data.prompt)  // Set the generated prompt in the textarea
+        setPrompt(data.prompt); // Show only the random part in the textarea
       } else {
-        console.error('Failed to generate prompt:', data.error)
-        setPrompt('Failed to generate prompt')
+        console.error('Failed to generate prompt:', data.error);
+        setPrompt('Failed to generate prompt');
       }
     } catch (error) {
-      console.error('Error fetching random prompt:', error)
-      setPrompt('Error generating prompt')
+      console.error('Error fetching random prompt:', error);
+      setPrompt('Error generating prompt');
     }
-    setIsRandomizing(false)  // Set loading state to false
-  }
+    setIsRandomizing(false);
+  };
 
   const handleGenerate = async () => {
-    setIsLoading(true)
-    setShowImageBox(true)
+    setIsLoading(true);
+    setShowLightbox(true); // Open lightbox as soon as the submit button is pressed
+
+    // Combine the random part and the hidden part of the prompt
+    const fullPrompt = `${prompt}. ${hiddenPromptPart}`;
+
     try {
-      // Make API call to generate the image
       const response = await fetch('/api/generate-image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt: fullPrompt }), // Send the full prompt
       });
 
       const data = await response.json();
-      setGeneratedImage(data.imageUrl); // Set the generated image URL
-      setIsLightboxOpen(true); // Open the lightbox automatically after image is generated
+      setGeneratedImage(data.imageUrl);
     } catch (error) {
-      console.error('Error generating image:', error)
+      console.error('Error generating image:', error);
     }
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const downloadImage = () => {
     if (generatedImage) {
-      const link = document.createElement('a')
-      link.href = generatedImage
-      link.download = 'generated-image.png'
-      link.click()
+      const link = document.createElement('a');
+      link.href = generatedImage;
+      link.download = 'generated-image.png';
+      link.click();
     }
-  }
+  };
+
+  const shareImage = () => {
+    if (navigator.share && generatedImage) {
+      navigator.share({
+        title: 'Check out this image!',
+        url: generatedImage,
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans">
@@ -95,8 +107,8 @@ export default function Component() {
             key={index}
             src={image}
             alt={`Background slideshow ${index + 1}`}
-            fill  // Replaces layout="fill"
-            className={`absolute inset-0 transition-opacity duration-2000 ${index === currentBackgroundIndex ? 'opacity-100' : 'opacity-0'}`}
+            fill
+            className={`absolute inset-0 object-cover transition-opacity duration-2000 ${index === currentBackgroundIndex ? 'opacity-100' : 'opacity-0'}`}
           />
         ))}
         <div className="relative z-10 h-full bg-black bg-opacity-30 text-white flex flex-col justify-between p-6">
@@ -111,37 +123,6 @@ export default function Component() {
           </header>
 
           <main className="container mx-auto text-center max-w-2xl flex flex-col items-center justify-end h-full pb-8">
-            {showImageBox && (
-              <div className="relative w-80 h-[500px] rounded-lg overflow-hidden bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 mb-6">
-                {isLoading ? (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                  </div>
-                ) : generatedImage ? (
-                  <>
-                    <Image 
-                      src={generatedImage}
-                      alt="Generated Art" 
-                      fill  // Replaces layout="fill"
-                      className="cursor-pointer"
-                      onClick={() => setIsLightboxOpen(true)}  // Open lightbox on click
-                    />
-                    <button
-                      onClick={() => setShowImageBox(false)}
-                      className="absolute top-2 right-2 bg-white bg-opacity-20 text-white p-1 rounded-full hover:bg-opacity-30 transition duration-300"
-                    >
-                      <X size={20} />
-                    </button>
-                    <button
-                      onClick={downloadImage}
-                      className="absolute bottom-2 right-2 bg-white bg-opacity-20 text-white p-2 rounded-full hover:bg-opacity-30 transition duration-300"
-                    >
-                      <Download size={20} />
-                    </button>
-                  </>
-                ) : null}
-              </div>
-            )}
             <div className="relative w-full">
               <textarea
                 ref={textareaRef}
@@ -154,13 +135,13 @@ export default function Component() {
                   paddingBottom: '50px',
                   overflowY: 'hidden',
                 }}
-                disabled={isRandomizing}  // Disable typing while randomizing
+                disabled={isRandomizing}
               />
               <div className="absolute bottom-4 left-4 flex space-x-2">
                 <button
                   onClick={handleRandomize}
                   className="w-10 h-10 flex items-center justify-center bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors duration-200 rounded-lg"
-                  disabled={isRandomizing}  // Disable button while randomizing
+                  disabled={isRandomizing}
                 >
                   <Shuffle size={24} className="text-white" />
                 </button>
@@ -185,32 +166,55 @@ export default function Component() {
             <div className="flex items-center text-white text-xs">
               <Lightbulb className="mr-2 flex-shrink-0" size={16} />
               <p>
-                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt for best results.
+                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt. Images take about 20 seconds to generate. 
               </p>
             </div>
           </div>
         </div>
 
-        {/* Full-screen lightbox for the generated image */}
-        {isLightboxOpen && generatedImage && (
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
-            <div className="relative max-w-3xl w-full p-4">
-              <Image 
-                src={generatedImage}
-                alt="Generated Art" 
-                fill  // Replaces layout="fill"
-                className="rounded-lg"
-              />
-              <button
-                onClick={() => setIsLightboxOpen(false)}
-                className="absolute top-4 right-4 bg-white text-black p-2 rounded-full hover:bg-gray-300 transition duration-300"
-              >
-                <X size={24} />
-              </button>
+        {/* Lightbox for the generated image */}
+        {showLightbox && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
+            <div className="relative w-[90vw] max-w-[540px] h-auto">
+              {isLoading ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Loading animation */}
+                  <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              ) : generatedImage ? (
+                <>
+                  <Image 
+                    src={generatedImage}
+                    alt="Generated Art"
+                    layout="responsive"
+                    width={16} 
+                    height={9} 
+                    className="object-contain max-h-[80vh]" // Constrain image within lightbox
+                  />
+                  <button
+                    onClick={() => setShowLightbox(false)}
+                    className="absolute top-2 right-2 bg-white bg-opacity-30 text-black p-2 rounded-full hover:bg-opacity-50 backdrop-blur-sm transition duration-300"
+                  >
+                    <X size={24} />
+                  </button>
+                  <button
+                    onClick={shareImage}
+                    className="absolute bottom-2 left-2 bg-white bg-opacity-30 text-black p-2 rounded-full hover:bg-opacity-50 backdrop-blur-sm transition duration-300"
+                  >
+                    <Share size={24} />
+                  </button>
+                  <button
+                    onClick={downloadImage}
+                    className="absolute bottom-2 right-2 bg-white bg-opacity-30 text-black p-2 rounded-full hover:bg-opacity-50 backdrop-blur-sm transition duration-300"
+                  >
+                    <Download size={24} />
+                  </button>
+                </>
+              ) : null}
             </div>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

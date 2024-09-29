@@ -8,21 +8,25 @@ const openai = new OpenAI({
 
 export async function GET() {
   try {
-    // Use GPT-3.5 to generate a funny or epic prompt for Luh Tyler
+    // Use GPT-3.5/4 to generate the random/funny part of the prompt for Luh Tyler
     const response = await openai.chat.completions.create({
       model: 'gpt-4o',
       messages: [
         {
           role: 'user',
           content: `
-            Generate a funny or epic prompt for a custom image of 'LuhTyler'. 
-            The scene should be either hilarious or incredibly epic, placing him in over-the-top, unique situations. 
-            Example ideas: 
-              - 'LuhTyler' saving the world from a meteor with a boombox.
-              - 'LuhTyler' riding a giant squirrel through a city made of waffles.
-              - 'LuhTyler' as a space pirate, standing on an asteroid while gazing at a galaxy in the distance.
-              - 'LuhTyler' surfing on a tidal wave made of fire, with a dragon flying overhead.
-            The prompt should be no more than 50 words, detailed but concise, and inspire a sense of humor or epicness.`
+  Generate a visually striking and detailed prompt for a custom image of 'LuhTyler'.
+  Alternate between epic, cinematic, or whimsical themes, but the prompt should focus on one idea at a time.
+  The scene should either be hilarious, grand, or awe-inspiring, placing 'LuhTyler' in a unique, over-the-top situation.
+  Example ideas:
+    - 'LuhTyler' standing in front of a futuristic city, holding a boombox, with laser beams shooting from his sunglasses.
+    - 'LuhTyler' as a Renaissance knight in shining armor, posing confidently in a grand castle hall with stained glass windows.
+    - 'LuhTyler' riding a massive dragon through the clouds, with the sun setting in the background, casting epic light.
+    - 'LuhTyler' DJ-ing in space, with planets and stars in the background, wearing futuristic gear.
+    - 'LuhTyler' leading a parade of robots, with fireworks lighting up the sky.
+
+  Ensure that the prompt is no more than 20 words, concise, and gives clear visual direction with a single focal point.
+  Focus on dynamic, cinematic, or photorealistic scenes depending on the mood of the scene.`
         },
       ],
     });
