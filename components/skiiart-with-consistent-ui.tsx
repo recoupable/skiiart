@@ -129,7 +129,7 @@ export default function Component() {
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Bring Luh Tyler to life in any scene you dream up! Type your idea here to begin..."
+                placeholder="Bring Luh Tyler to life! Type your idea..."
                 className="w-full py-4 px-6 rounded-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg placeholder-white placeholder-opacity-70 pr-14"
                 style={{
                   minHeight: '80px',
