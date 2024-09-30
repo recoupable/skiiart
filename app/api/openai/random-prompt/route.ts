@@ -8,12 +8,12 @@ const openai = new OpenAI({
 
 export async function GET() {
   try {
-    // Log the API key to check if it's being picked up in production
+    // Log the API key to check if it's being picked up
     console.log('OpenAI API Key:', process.env.OPENAI_API_KEY);
 
-    // Use GPT-4 to generate the random prompt for LuhTyler
+    // Use GPT-4 to generate the random/funny part of the prompt for LuhTyler
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4',
       messages: [
         {
           role: 'user',
@@ -33,11 +33,11 @@ export async function GET() {
       ],
     });
 
-    // Validate response structure before proceeding
-    if (response?.choices?.[0]?.message?.content) {
+    // Check if response and choices are valid
+    if (response && response.choices && response.choices[0]?.message?.content) {
       const generatedPrompt = response.choices[0].message.content.trim();
 
-      // Add headers to prevent caching at all levels
+      // Explicitly set cache control headers in the response
       const headers = new Headers({
         'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
         'Pragma': 'no-cache',
@@ -45,8 +45,7 @@ export async function GET() {
         'Surrogate-Control': 'no-store',
       });
 
-      // Return the generated prompt with appropriate headers
-      return NextResponse.json({ prompt: generatedPrompt }, { headers });
+      return new NextResponse(JSON.stringify({ prompt: generatedPrompt }), { headers });
     } else {
       throw new Error('Invalid response from OpenAI');
     }
