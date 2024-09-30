@@ -27,8 +27,7 @@ export async function GET() {
         {
           role: 'user',
           content: `
-            Generate one visually striking and detailed prompt for a custom cinematic high-quality image of 'LuhTyler'.
-            Alternate between epic, cinematic, or funny themes, but the prompt should focus on one idea at a time.
+            Generate one visually striking and detailed prompt for an image of 'LuhTyler'.
             The scene should either be hilarious, grand, or awe-inspiring, placing 'LuhTyler' in a unique, over-the-top situation.
             Ensure that the prompt is no more than 20 words, concise, and gives clear visual direction with a single focal point of 'Luh Tyler'.
             Focus on dynamic, cinematic, or photorealistic scenes depending on the mood, composition, and description of the scene. Here are some example prompts:
