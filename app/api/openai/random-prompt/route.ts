@@ -27,12 +27,17 @@ export async function GET() {
         {
           role: 'user',
           content: `
-            Generate a visually striking and detailed prompt for a custom image of 'LuhTyler'.
-            (Request Time: ${requestTime})
-            Alternate between epic, cinematic, or whimsical themes, but the prompt should focus on one idea at a time.
+            Generate one visually striking and detailed prompt for a custom image of 'LuhTyler'.
+            Alternate between epic, cinematic, or funny themes, but the prompt should focus on one idea at a time.
             The scene should either be hilarious, grand, or awe-inspiring, placing 'LuhTyler' in a unique, over-the-top situation.
             Ensure that the prompt is no more than 20 words, concise, and gives clear visual direction with a single focal point.
-            Focus on dynamic, cinematic, or photorealistic scenes depending on the mood of the scene.`
+            Focus on dynamic, cinematic, or photorealistic scenes depending on the mood of the scene. Here are some example prompts:
+            - LuhTyler, dressed in regal Renaissance attire, stands before a grand cathedral, sunlight illuminating his golden crown.
+            - LuhTyler leads an army across a misty battlefield, clad in shining armor, sword raised high in victory.
+            - LuhTyler in slow-motion, jumping from a helicopter with fireworks exploding in the night sky behind him.
+            - LuhTyler stands off in a dusty desert town, cowboy hat tipped low, tumbleweeds rolling past in the background.
+            - LuhTyler stuck in a giant cotton candy machine, spinning wildly as pink fluff engulfs him.
+            - LuhTyler at a high-stakes poker table, but all his opponents are penguins in tuxedos, playing seriously.`
         },
       ],
     });
