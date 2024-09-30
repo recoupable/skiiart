@@ -1,0 +1,9 @@
+{
+    "functions": {
+      "api/openai/random-prompt": {
+        "maxDuration": 10,
+        "memory": 1024,
+        "cache": false
+      }
+    }
+  }
