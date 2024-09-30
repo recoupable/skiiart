@@ -167,7 +167,7 @@ export default function Component() {
             <div className="flex items-center text-white text-xs">
               <Lightbulb className="mr-2 flex-shrink-0" size={16} />
               <p>
-                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt. Images take about 20 seconds to generate. 
+                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt.
               </p>
             </div>
           </div>
@@ -178,9 +178,11 @@ export default function Component() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
             <div className="relative w-[90vw] max-w-[540px] h-auto">
               {isLoading ? (
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
                   {/* Loading animation */}
-                  <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
+                  {/* Added text */}
+                  <p className="text-white text-sm">Images take about 20 seconds to generate.</p>
                 </div>
               ) : generatedImage ? (
                 <>
