@@ -123,8 +123,8 @@ export default function Component() {
             />
           </header>
 
-          <main className="container mx-auto text-center max-w-2xl flex flex-col items-center justify-end h-full pb-8">
-            <div className="relative w-full">
+          <main className="container mx-auto text-center max-w-2xl flex flex-col items-center justify-center h-full">
+            <div className="relative w-full mb-4">
               <textarea
                 ref={textareaRef}
                 value={prompt}
@@ -161,16 +161,16 @@ export default function Component() {
                 </button>
               </div>
             </div>
-          </main>
 
-          <div className="flex justify-center items-center mb-2">
-            <div className="flex items-center text-white text-xs">
-              <Lightbulb className="mr-2 flex-shrink-0" size={16} />
-              <p>
-                Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt.
-              </p>
+            <div className="flex justify-center items-center mb-4">
+              <div className="flex items-center text-white text-xs">
+                <Lightbulb className="mr-2 flex-shrink-0" size={16} />
+                <p>
+                  Include trigger word <strong>&#39;LuhTyler&#39;</strong> in your prompt.
+                </p>
+              </div>
             </div>
-          </div>
+          </main>
         </div>
 
         {/* Lightbox for the generated image */}
