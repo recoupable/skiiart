@@ -28,9 +28,9 @@ export async function GET() {
           role: 'user',
           content: `
             Generate one visually striking and detailed prompt for an image of 'LuhTyler'.
-            The scene should either be hilarious, grand, or awe-inspiring, placing 'LuhTyler' in a unique, over-the-top situation.
+            The scene should either be grand, hilarious or awe-inspiring, placing 'LuhTyler' in a unique situation.
             Ensure that the prompt is no more than 20 words, concise, and gives clear visual direction with a single focal point of 'Luh Tyler'.
-            Focus on dynamic, cinematic, or photorealistic scenes depending on the mood, composition, and description of the scene. Here are some example prompts:
+            Focus on cinematic or photorealistic scenes depicting the mood, composition, and description of the scene. Here are some examples:
             - LuhTyler dressed in regal Renaissance attire stands before a grand cathedral, sunlight illuminating his golden crown.
             - LuhTyler leads an army across a misty battlefield, clad in shining armor, sword raised high in victory.
             - LuhTyler in slow-motion, jumping from a helicopter with fireworks exploding in the night sky behind him.
