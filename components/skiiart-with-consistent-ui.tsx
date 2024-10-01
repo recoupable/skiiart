@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Wand2, Lightbulb, Shuffle, X, Download, Share } from 'lucide-react';
+import { Wand2, Lightbulb, X, Download, Share, Dice6 } from 'lucide-react';
 import Image from 'next/image';
 
 const backgroundImages = [
@@ -129,7 +129,7 @@ export default function Component() {
                 ref={textareaRef}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Bring Luh Tyler to life! Type your idea..."
+                placeholder="Bring Luh Tyler to life in any scene with AI! Type your idea or roll the dice to get started..."
                 className="w-full py-4 px-6 rounded-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg placeholder-white placeholder-opacity-70 pr-14"
                 style={{
                   minHeight: '80px',
@@ -144,7 +144,7 @@ export default function Component() {
                   className="w-10 h-10 flex items-center justify-center bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors duration-200 rounded-lg"
                   disabled={isRandomizing}
                 >
-                  <Shuffle size={24} className="text-white" />
+                  <Dice6 size={24} className="text-white" />
                 </button>
               </div>
               <div className="absolute bottom-4 right-4">
@@ -154,7 +154,7 @@ export default function Component() {
                   className="w-10 h-10 flex items-center justify-center bg-white bg-opacity-10 hover:bg-opacity-20 transition-colors duration-200 rounded-lg"
                 >
                   {isLoading ? (
-                    <Shuffle className="animate-spin" size={24} />
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   ) : (
                     <Wand2 size={24} className="text-white" />
                   )}
